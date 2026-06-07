@@ -1,0 +1,785 @@
+Create a complete, premium, fully interactive web application prototype for a project named:
+
+Awaaz Setu
+Tagline: Safe first step. Trusted support.
+
+Project Category:
+A Preventive Safety, Anonymous Intake, Early-Intervention, Evidence-Aware Triage, and Authorized Support Routing System.
+
+Main Purpose:
+This web app is a demo prototype for funding clients, Bihar Startup pitch, NGO partners, MLA/district administration presentation, and government pilot discussions.
+
+Important Positioning:
+Awaaz Setu is NOT a public complaint wall, NOT a police portal, NOT a court, NOT an FIR platform, NOT an emergency service, NOT a revenge tool, and NOT a platform to publicly expose or shame anyone.
+
+Awaaz Setu is a safe anonymous first-step system where people facing harassment, bullying, ragging, cyber blackmail, bad touch, institutional pressure, mental distress, abuse, or suicidal risk can share their situation safely, preserve context, receive a token, and get routed toward the right support system.
+
+Use this core positioning throughout the website:
+“Awaaz Setu does not replace existing helplines, police, courts, government portals, hospitals, NGOs, or official complaint authorities. It acts as a safe first-step bridge that helps silent users reach the right support system.”
+
+Tech Stack:
+Use React with Vite or Next.js, TypeScript if possible, Tailwind CSS for styling, and Chart.js or Recharts for charts.
+Use mock JSON data and localStorage only.
+Do not build any real backend.
+Do not upload files to any server.
+Do not use real database storage.
+Make all upload/report/dashboard features demo-only but visually realistic.
+
+Design Requirements:
+Use a trustworthy and safe color palette:
+
+* Deep blue
+* Purple accent
+* Clean white
+* Soft gray
+* Green/yellow/orange/red only for severity badges
+  The UI should look premium, modern, calm, government-friendly, NGO-friendly, investor-ready, and mobile responsive.
+  Avoid dark emotional imagery.
+  Avoid sensational language.
+  Avoid victim-blaming language.
+  Avoid aggressive accusation language.
+  Use simple Indian English.
+  Use cards, badges, tables, modals, smooth transitions, tabs, dashboards, clean spacing, and strong visual hierarchy.
+
+Global Header:
+Create a sticky navigation with:
+
+* Logo: Awaaz Setu
+* Home
+* Report Safely
+* Track Report
+* Government Value
+* Awareness Data
+* Admin Demo
+* Policies
+* FAQ
+* CTA Button: Report Safely
+
+Global Footer:
+Add this disclaimer on every page:
+“Awaaz Setu is a support, documentation, early-intervention, and referral platform. It does not replace police, court, hospital, emergency services, helplines, government portals, or official complaint authorities. In immediate danger, contact emergency services or a trusted person near you.”
+
+Also add footer links:
+
+* Privacy Policy
+* Terms of Use
+* Evidence Handling Policy
+* False Report Policy
+* Child Safety Policy
+* Crisis Support Disclaimer
+
+PAGE 1: LANDING PAGE / HOME
+
+Hero Section:
+Headline:
+“A safe first step before crisis begins.”
+
+Subheadline:
+“Awaaz Setu helps people share distress safely, preserve context, identify risk, and reach the right support system.”
+
+CTA Buttons:
+
+* Speak Safely / Report Anonymously
+* How It Works
+* I Need Help Now
+
+Trust Chips:
+
+* Anonymous first-step
+* No public naming
+* No guilt declaration
+* Token-based follow-up
+* Authorized referral
+* Demo-only prototype
+
+Add a visual card showing:
+Report → Token → Severity Review → Support Routing
+
+Add a strong statement:
+“Awaaz Setu is not built for public blame. It is built for safety, early support, and responsible routing.”
+
+SECTION: WHAT AWAaz SETU IS
+
+Explain with cards:
+
+1. Anonymous Intake Layer
+   Users can share their situation without mandatory login, registration, email, or phone number.
+
+2. Evidence-Aware Documentation
+   Users may upload screenshots, messages, photos, PDFs, audio, or documents in demo mode. Evidence is helpful but not mandatory.
+
+3. Severity Triage
+   Reports are categorized into L1, L2, L3, or L4 based on urgency and risk.
+
+4. Token-Based Follow-Up
+   After submission, users receive a mock anonymous token such as AWZ-4821-K.
+
+5. Support Routing
+   Depending on the case, the system can guide users toward counselors, NGOs, legal advisors, Cyber Crime Portal, Tele-MANAS, NCW, SHe-Box, district committee, or emergency support.
+
+6. Government Insight
+   Anonymous aggregated trends can help district administration understand safety concerns without exposing personal identities.
+
+SECTION: WHAT AWAaz SETU IS NOT
+
+Create a clear comparison block:
+
+Awaaz Setu is NOT:
+
+* Not an FIR platform
+* Not police replacement
+* Not a court
+* Not a public complaint wall
+* Not a revenge tool
+* Not a political platform
+* Not an emergency response service
+* Not a place to declare anyone guilty
+
+Awaaz Setu IS:
+
+* Safe first-step system
+* Anonymous intake layer
+* Evidence-aware documentation tool
+* Severity triage system
+* Support routing bridge
+* Preventive safety governance tool
+
+PAGE 2: HOW IT WORKS
+
+Create a step-by-step interactive section:
+
+Step 1: User shares concern anonymously
+No login, no mandatory identity, no public exposure.
+
+Step 2: User adds incident details
+Date, time, location, category, statement, and optional evidence.
+
+Step 3: System checks risk signals
+Keyword-based mock detection for crisis or self-harm phrases.
+
+Step 4: Severity level assigned
+L1 to L4 based on category and seriousness.
+
+Step 5: Token generated
+Example: AWZ-4821-K
+
+Step 6: Support routing suggested
+Mental health, NGO, legal, cyber portal, women helpline, district committee, or emergency guidance.
+
+Step 7: User tracks report by token
+No identity needed.
+
+PAGE 3: ANONYMOUS REPORT INTAKE FORM
+
+Create a multi-step form with progress indicator.
+
+Step 1: Select Incident Category
+Options:
+
+* Mental pressure or emotional distress
+* Bullying
+* Ragging
+* Cyber harassment
+* Cyber blackmail
+* Institutional pressure
+* Harassment by teacher/staff/authority
+* Bad touch
+* Sexual harassment
+* Physical threat
+* Stalking or repeated unwanted contact
+* Workplace harassment
+* Other sensitive issue
+
+Step 2: Location / District
+Use dropdown:
+
+* Gopalganj
+* Patna
+* Muzaffarpur
+* Gaya
+* Bhagalpur
+* Siwan
+* Bettiah
+* Darbhanga
+* Other Bihar district
+* Outside Bihar
+
+Step 3: Seriousness Level
+Options:
+
+* I only want to share safely
+* I need guidance
+* I feel unsafe
+* I am being threatened
+* I feel like harming myself
+* Someone is in immediate danger
+
+Step 4: Statement
+Rich textarea with placeholder:
+“Write in your own words. You do not need to share your name. Share only what you feel safe sharing.”
+
+Step 5: Prepare Your Report Checklist
+Show checklist as helper:
+
+* Date and time of incident
+* Location of incident
+* What happened
+* Available evidence
+* Witness details, if any
+* Respondent details, if known
+* Current safety risk
+* Whether you need immediate support
+
+Add note:
+“Evidence is helpful but not mandatory. You can still submit if you do not have complete details.”
+
+Step 6: Mock Evidence Upload
+Allow file selection for:
+
+* Images
+* Audio
+* Video
+* PDF
+* Text documents
+* Screenshots
+
+After user selects files:
+
+* Show file names
+* Show fake upload progress bar
+* Show success state:
+  “Demo: Files appear safely encrypted into a secure evidence locker. No real upload is happening in this prototype.”
+
+Important:
+Clearly mark this feature as demo-only.
+
+Step 7: Optional Support Preference
+Options:
+
+* I want to stay fully anonymous
+* I want token-based updates only
+* I want counselor support
+* I may share contact voluntarily later
+* I need urgent support guidance
+
+Step 8: Consent Checkbox
+Text:
+“I confirm that the information shared by me is true to the best of my knowledge. I understand that false, edited, misleading, or malicious reports can harm innocent people and may lead to action.”
+
+Submit Button:
+Submit Report Safely
+
+Submission Success:
+After form submission:
+
+* Generate random token like AWZ-4821-K
+* Save report in localStorage
+* Display beautiful success card
+* Show token
+* Add Copy Token button
+* Add Track Report button
+* Add message:
+  “Please save this token. It is your anonymous way to check updates. Do not share it publicly.”
+
+PAGE 4: REAL-TIME SEVERITY TRIAGE
+
+Create frontend logic to assign severity.
+
+Severity Rules:
+L1 Low Risk:
+
+* emotional sharing
+* normal stress
+* one-time bullying
+* guidance request
+
+L2 Medium Risk:
+
+* repeated harassment
+* threats
+* cyber harassment
+* institutional pressure
+* feeling unsafe
+
+L3 High Risk:
+
+* sexual harassment
+* serious blackmail
+* self-harm thoughts
+* severe mental distress
+* stalking
+* repeated threats
+
+L4 Critical:
+
+* active self-harm plan
+* “someone is in immediate danger”
+* child abuse indication
+* active physical danger
+* rape/sexual assault indication
+* suicidal intent keywords
+
+Show severity preview beside the report form:
+
+* L1 green
+* L2 yellow
+* L3 orange
+* L4 red
+
+Add text:
+“Awaaz Setu does not decide guilt. It only identifies urgency, risk, and support need.”
+
+PAGE 5: CRISIS PROTOCOL OVERLAY
+
+Implement real-time keyword detection in the statement textarea.
+
+If user types any of these keywords:
+
+* suicide
+* kill myself
+* end my life
+* harm myself
+* self harm
+* mar jaunga
+* jaan de dunga
+* zinda nahi rehna
+* khud ko maar
+* mujhe jeena nahi
+* life end
+
+Trigger a crisis overlay or urgent notice.
+
+Overlay title:
+“Emergency Support Needed”
+
+Overlay message:
+“Awaaz Setu is a preventive system, not an emergency response service. If you may harm yourself or someone is harming you right now, please do not wait for an online response. Contact emergency services, a trusted person near you, or a verified helpline immediately.”
+
+Show buttons:
+
+* I am safe now
+* Show helplines
+* Continue report
+* Exit and seek immediate help
+
+Helpline cards:
+
+* Emergency: 112
+* Tele-MANAS: 14416 / 1800-891-4416
+* Cyber Crime Helpline: 1930
+* Women Helpline: 181
+* Child Help: 1098
+* Vandrevala Foundation: +91 9999 666 555
+
+Add note:
+“Helpline details must be verified before production launch.”
+
+PAGE 6: TOKEN-BASED ANONYMOUS TRACKING
+
+Create Track Report page.
+
+Input:
+Enter token ID
+
+Predefined mock tokens:
+
+1. AWZ-4821-K
+   Status timeline:
+
+* Report Received
+* Severity Assigned: L2
+* Moderator Review Started
+* Support Suggested
+
+2. AWZ-9134-M
+   Status timeline:
+
+* Report Received
+* Severity Assigned: L3
+* Routed to Verified Counselor
+* Follow-up Recommended
+
+3. AWZ-7062-X
+   Status timeline:
+
+* Report Received
+* Severity Assigned: L4
+* Emergency Support Notice Triggered
+* Escalation Protocol Suggested
+
+4. AWZ-2258-P
+   Status timeline:
+
+* Report Received
+* Severity Assigned: L1
+* Resources Shared
+* Case Closed
+
+Also allow tracking of tokens generated from localStorage reports.
+
+If token not found:
+Show:
+“No demo report found for this token. Please check the token or submit a demo report first.”
+
+PAGE 7: EXISTING SYSTEMS VS AWAaz SETU
+
+Create a dedicated section/page explaining that Awaaz Setu is not competing with existing systems.
+
+Add cards:
+
+Tele-MANAS:
+Focus: Mental health support
+What it does well: Counselling and mental health assistance
+Gap Awaaz fills: Written anonymous intake, evidence context, token tracking, support routing
+
+Vandrevala / iCALL:
+Focus: Counseling support
+What it does well: Emotional and crisis support
+Gap Awaaz fills: Evidence-aware reporting and structured routing
+
+National Cyber Crime Portal:
+Focus: Cybercrime reporting
+What it does well: Official cybercrime complaints
+Gap Awaaz fills: Early identification of cyber blackmail and safe guidance to official portal
+
+NCW:
+Focus: Women complaints
+What it does well: Women grievance redressal
+Gap Awaaz fills: Anonymous first-step before formal complaint
+
+SHe-Box:
+Focus: Workplace sexual harassment
+What it does well: POSH-related complaint routing
+Gap Awaaz fills: Broader student, youth, cyber, mental distress, and institutional pressure support
+
+POSH Firms:
+Focus: Workplace compliance
+What it does well: Training and IC setup
+Gap Awaaz fills: Victim-first anonymous early warning and institutional dashboard
+
+Main conclusion:
+“Awaaz Setu does not replace these systems. It acts as the safe first-step bridge that helps users reach the right system.”
+
+PAGE 8: GOVERNMENT VALUE PAGE
+
+Create a polished government pitch page.
+
+Headline:
+“How Awaaz Setu helps district administration”
+
+Explain:
+For government, the value is not monetary profit. It is public trust, crisis prevention, administrative efficiency, safer youth/women systems, and anonymous safety insights.
+
+Cards:
+
+1. Early Warning Signals
+   Identify distress, bullying, cyber blackmail, and harassment patterns before public crisis.
+
+2. Crisis Prevention
+   Help users seek support before self-harm, protest, viral exposure, or institutional breakdown.
+
+3. Public Trust
+   Citizens feel the system is listening even when they fear formal complaints.
+
+4. Women and Youth Safety Image
+   District can present a safety-first model for students, women, and vulnerable groups.
+
+5. Administrative Efficiency
+   Cases can be categorized and routed to the right support instead of random escalation.
+
+6. Anonymous Safety Trends
+   District can view aggregated data without exposing victims.
+
+7. Better Routing
+   Users can be guided toward Tele-MANAS, Cyber Crime Portal, NCW, SHe-Box, NGO, legal aid, or district committee.
+
+Add pitch line:
+“Awaaz Setu is not a complaint replacement system. It is a preventive governance tool.”
+
+PAGE 9: PUBLIC SAFETY PARTNERSHIP MODEL
+
+Create responsibility table:
+
+Work | Responsible Body
+
+Website / portal design | Awaaz Team
+Anonymous report intake | Awaaz Setu
+Token system | Awaaz Setu
+Basic triage | Awaaz Setu + trained moderator
+Serious evidence custody | Authorized partner / government-approved storage
+Child abuse escalation | Legal authority / child protection system
+Police action | Police / authorized body
+Mental health support | Verified counselor / NGO
+Data governance oversight | District nominated officer / authorized committee
+
+Add note:
+“Awaaz Setu should not become a private evidence locker. Serious evidence custody and emergency escalation must be handled through authorized partners or government-approved systems.”
+
+PAGE 10: DISTRICT PILOT PLAN
+
+Create 3-phase pilot timeline:
+
+Phase 1: Controlled Demo
+
+* Website prototype
+* Policy validation
+* Legal/counselor/NGO review
+* No public launch
+
+Phase 2: Closed Pilot
+
+* 1–2 colleges or youth groups
+* Limited users
+* No public campaign
+* Feedback on trust, safety language, form clarity, and severity tagging
+
+Phase 3: Government-Guided District Pilot
+
+* MLA/district guidance
+* NGO/counselor/legal support
+* Monthly anonymous trend report
+* No public naming
+* Serious cases routed to authorized systems
+
+Pilot Success Metrics:
+
+* Reports received
+* Support requests
+* High-risk cases identified
+* Cases routed to support
+* Fake reports flagged
+* Anonymous district trends
+* User trust feedback
+
+PAGE 11: AWARENESS DASHBOARD
+
+Create dashboard page with mock awareness data.
+
+Cards:
+
+* 240 incidents reviewed
+* 28 states covered
+* 37 victim groups
+* Top categories: bullying, cyber blackmail, mental distress, institutional pressure, harassment
+
+State table:
+Tamil Nadu: 25
+Karnataka: 24
+Maharashtra: 23
+Andhra Pradesh: 20
+Rajasthan: 20
+Uttar Pradesh: 20
+Kerala: 18
+Telangana: 18
+Gujarat: 13
+Bihar: 7
+
+Add bar chart for state counts.
+Add pie chart or bar chart for incident categories.
+Add city examples:
+
+* Hyderabad
+* Chennai
+* Bengaluru
+* Patna
+* Kota
+* Greater Noida
+* Nellore
+
+Mandatory disclaimer at bottom:
+“This awareness dashboard is based on media-reported incidents and internal compilation. It is not an official government crime record, not a legal finding, and not proof against any person or institution.”
+
+PAGE 12: INTERACTIVE ADMIN DASHBOARD
+
+Create a professional dashboard view for authorized moderators/district officers.
+
+This is a demo-only dashboard.
+
+Analytics Cards:
+
+* Total Reports Intake
+* Active L4 / Critical Cases
+* Resolved Cases
+* Reports Routed
+* Fake Reports Flagged
+* Top Distress Category
+
+Charts:
+
+* Reports by Severity
+* Reports by Category
+* Reports by District
+* Monthly Intake Trend
+
+Report Management Table:
+Columns:
+
+* Token ID
+* Category
+* District
+* Submission Date
+* Assigned Severity Level
+* Current Status
+* Action
+
+Severity badges:
+
+* L1 Green
+* L2 Yellow
+* L3 Orange
+* L4 Red
+
+Use mock reports:
+
+* AWZ-4821-K | Bullying | Patna | L2 | Under Review
+* AWZ-9134-M | Mental Distress | Gopalganj | L3 | Routed to Counselor
+* AWZ-7062-X | Self-Harm Risk | Muzaffarpur | L4 | Urgent Protocol Suggested
+* AWZ-2258-P | Institutional Pressure | Gaya | L1 | Resources Shared
+* AWZ-6681-B | Cyber Blackmail | Siwan | L3 | Legal Guidance Suggested
+
+Detail Modal:
+When clicking a report:
+Show:
+
+* Token ID
+* Category
+* District
+* Date
+* Severity
+* Anonymous statement
+* Mock evidence list
+* Current status
+* Suggested routing
+
+Buttons:
+
+* Route to Counselor
+* Escalate to District Committee
+* Mark Need More Details
+* Mark Resolved
+* Flag Suspicious Report
+
+When button clicked:
+Show toast notification and update status visually.
+
+Production note:
+“Real dashboard must include secure login, role-based access, encryption, audit logs, evidence access controls, and legal review.”
+
+PAGE 13: POLICY CENTER
+
+Create policy page with tabs or accordion.
+
+1. Privacy Policy
+   Content:
+   Awaaz Setu collects minimum necessary information. Users can submit reports without mandatory name, email, or phone. Optional contact is collected only if user chooses follow-up support. Reports are not made public.
+
+2. Terms of Use
+   Users must submit true and responsible information. Awaaz Setu does not declare guilt and does not replace official authorities.
+
+3. Evidence Handling Policy
+   Evidence may include screenshots, messages, photos, audio, video, PDFs, or documents. In this prototype, upload is demo-only. In production, evidence must be encrypted, access-controlled, and handled under approved protocols.
+
+4. False Report & Misuse Policy
+   Fake, edited, AI-generated, misleading, malicious, or revenge-based reports are prohibited. Suspicious reports may be reviewed, rejected, or flagged.
+
+5. Child Safety Policy
+   Reports involving minors, bad touch, grooming, blackmail, or abuse must be handled with special care and authorized legal/child protection channels.
+
+6. Crisis Support Disclaimer
+   Awaaz Setu is not an emergency response service. If someone is in immediate danger, they should contact emergency services, hospital, police, verified helplines, or trusted people nearby.
+
+PAGE 14: FAQ PAGE
+
+Add questions and answers:
+
+Q1. Is Awaaz Setu anonymous?
+Yes. Users can submit without mandatory name, email, or phone.
+
+Q2. Does Awaaz Setu file FIR?
+No. It is not a police portal. It can guide users toward official systems.
+
+Q3. Will my report be public?
+No. Awaaz Setu does not publish reports.
+
+Q4. Does Awaaz Setu decide who is guilty?
+No. It only identifies urgency, risk, and support need.
+
+Q5. What if someone submits a fake report?
+Fake or misleading reports are prohibited and can be flagged.
+
+Q6. Is evidence mandatory?
+No. Evidence is helpful but not mandatory.
+
+Q7. Can Awaaz Setu help during emergency?
+It can show guidance and helplines, but it is not an emergency response service.
+
+Q8. How is Awaaz Setu different from Tele-MANAS, NCW, Cyber Crime Portal, or SHe-Box?
+Those are important official/support systems. Awaaz Setu acts as a safe first-step bridge that helps users reach the right system.
+
+Q9. Who will review reports in production?
+Only trained and authorized moderators, counselors, legal advisors, NGOs, or district-approved bodies based on role and case type.
+
+Q10. Will victims have to pay?
+No. Core reporting should remain free for users. Sustainability can come from grants, CSR, institutional dashboards, and training programs.
+
+FUNCTIONAL REQUIREMENTS
+
+1. Navigation:
+   Use smooth scrolling or page tabs.
+   All navigation items should work.
+
+2. Report Form:
+   Multi-step flow should work.
+   Severity preview should update in real time.
+   Crisis overlay should trigger when high-risk keywords are typed.
+   Mock file upload should show progress and success.
+   Submission should generate token.
+   Report should save to localStorage.
+
+3. Tracking:
+   Should work with predefined mock tokens and newly generated localStorage tokens.
+   Show clean timeline view.
+
+4. Admin Dashboard:
+   Should show analytics using mock data + localStorage reports.
+   Detail modal should open.
+   Action buttons should visually update status.
+   Charts should render.
+
+5. Responsiveness:
+   Must look good on desktop, tablet, and mobile.
+
+6. Demo-Only Labels:
+   Every sensitive feature must show clear demo-only labels:
+
+* Evidence upload
+* Admin dashboard
+* Token tracking
+* Report storage
+
+7. Accessibility:
+   Use readable fonts, good contrast, clear buttons, and form labels.
+
+8. README:
+   Create README with:
+
+* Project description
+* Setup instructions
+* Demo-only limitations
+* How to run on Replit
+* How to deploy
+* Important legal disclaimer
+
+Final Output:
+Build a complete working web app prototype. Make it polished enough to show directly to:
+
+* Bihar Startup panel
+* MLA / district administration
+* NGO partners
+* legal advisors
+* counselors
+* developers
+* funding clients
+
+Important final instruction:
+Do not overpromise. Do not say Awaaz Setu provides justice, investigation, legal decision, or emergency rescue. Always position it as safe first-step, early-intervention, evidence-aware intake, severity triage, and authorized support routing system.

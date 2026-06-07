@@ -16,7 +16,7 @@ function TimelineEvent({ event, isLast, isLatest }: { event: { status: string; t
   return (
     <div className="flex gap-4">
       <div className="flex flex-col items-center">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isLatest ? "border-primary bg-primary" : "border-green-500 bg-green-500"}`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${isLatest && !isLast ? "border-primary bg-primary" : "border-green-500 bg-green-500"}`}>
           {isLatest && !isLast ? (
             <Clock className="w-4 h-4 text-white" />
           ) : (
@@ -56,7 +56,12 @@ export function Track() {
     setSubmittedToken(cleaned);
   }
 
-  const sampleTokens = ["AWZ-4821-K", "AWZ-7392-M", "AWZ-2847-P", "AWZ-9156-R"];
+  const sampleTokens = [
+    { token: "AWZ-4821-K", label: "L2 · Bullying · Patna" },
+    { token: "AWZ-9134-M", label: "L3 · Mental Distress · Gopalganj" },
+    { token: "AWZ-7062-X", label: "L4 · Self-Harm Risk · Muzaffarpur" },
+    { token: "AWZ-2258-P", label: "L1 · Institutional Pressure · Gaya" },
+  ];
 
   return (
     <div className="min-h-screen bg-background py-12 px-4">
@@ -66,7 +71,11 @@ export function Track() {
             <Search className="w-6 h-6 text-primary" />
           </div>
           <h1 className="text-2xl font-bold text-secondary mb-2">Track Your Report</h1>
-          <p className="text-muted-foreground text-sm">Enter your unique token to check the status and actions taken on your report.</p>
+          <p className="text-muted-foreground text-sm">Enter your unique token to check the status and actions taken on your report. No account needed.</p>
+          <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 mt-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            <span className="text-xs text-amber-700 font-medium">Demo — uses mock data only</span>
+          </div>
         </div>
 
         <div className="bg-card border border-card-border rounded-2xl p-6 sm:p-8 shadow-sm mb-6">
@@ -88,17 +97,18 @@ export function Track() {
               <Search className="w-4 h-4" /> Track
             </button>
           </form>
-          <div className="mt-4">
-            <p className="text-xs text-muted-foreground mb-2">Try a demo token:</p>
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-5">
+            <p className="text-xs text-muted-foreground mb-3">Try a demo token:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {sampleTokens.map((t) => (
                 <button
-                  key={t}
-                  data-testid={`button-sample-token-${t}`}
-                  onClick={() => { setInputToken(t); setSubmittedToken(t); }}
-                  className="text-xs font-mono px-3 py-1.5 rounded-lg bg-muted hover:bg-muted-foreground/10 text-secondary border border-border transition-colors"
+                  key={t.token}
+                  data-testid={`button-sample-token-${t.token}`}
+                  onClick={() => { setInputToken(t.token); setSubmittedToken(t.token); }}
+                  className="flex items-center justify-between text-xs px-3 py-2.5 rounded-lg bg-muted hover:bg-muted-foreground/10 text-secondary border border-border transition-colors text-left"
                 >
-                  {t}
+                  <span className="font-mono font-bold">{t.token}</span>
+                  <span className="text-muted-foreground ml-2">{t.label}</span>
                 </button>
               ))}
             </div>
@@ -117,7 +127,7 @@ export function Track() {
             <AlertTriangle className="w-10 h-10 text-muted-foreground mx-auto mb-4" />
             <h3 className="font-semibold text-secondary mb-2">Token not found</h3>
             <p className="text-muted-foreground text-sm">
-              No report found for token <span className="font-mono font-bold">{submittedToken}</span>. Please check your token and try again.
+              No demo report found for token <span className="font-mono font-bold">{submittedToken}</span>. Please check your token or submit a demo report first, then use that token here.
             </p>
           </div>
         )}
