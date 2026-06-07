@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Awaaz Setu"
+version = "1.0.0"
+id = "artifacts/awaaz-setu"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21040
+
+[services.development]
+run = "pnpm --filter @workspace/awaaz-setu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/awaaz-setu", "run", "build" ]
+publicDir = "artifacts/awaaz-setu/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21040"
+BASE_PATH = "/"

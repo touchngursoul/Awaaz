@@ -1,15 +1,20 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Awaaz Setu API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: reports
+    description: Anonymous report operations
+  - name: admin
+    description: Admin dashboard operations
+  - name: awareness
+    description: Awareness dashboard operations
 paths:
   /healthz:
     get:
@@ -24,6 +29,136 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /reports:
+    post:
+      operationId: submitReport
+      tags: [reports]
+      summary: Submit anonymous report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportInput"
+      responses:
+        "201":
+          description: Report submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportSubmitResult"
+
+  /reports/track:
+    get:
+      operationId: trackReport
+      tags: [reports]
+      summary: Track report by token
+      parameters:
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Report status timeline
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportTrackResult"
+        "404":
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/reports:
+    get:
+      operationId: listAdminReports
+      tags: [admin]
+      summary: List all reports for admin view
+      responses:
+        "200":
+          description: List of reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminReport"
+
+  /admin/reports/{id}:
+    get:
+      operationId: getAdminReport
+      tags: [admin]
+      summary: Get detailed report for admin
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Detailed report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminReportDetail"
+
+  /admin/reports/{id}/route:
+    post:
+      operationId: routeReport
+      tags: [admin]
+      summary: Route or escalate a report
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteAction"
+      responses:
+        "200":
+          description: Action taken
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminReport"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get dashboard summary statistics
+      responses:
+        "200":
+          description: Statistics summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /awareness/stats:
+    get:
+      operationId: getAwarenessStats
+      tags: [awareness]
+      summary: Get public awareness statistics
+      responses:
+        "200":
+          description: Awareness statistics by state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AwarenessStats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +169,257 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    ReportInput:
+      type: object
+      required:
+        - category
+        - district
+        - statement
+      properties:
+        category:
+          type: string
+        district:
+          type: string
+        statement:
+          type: string
+        evidenceFiles:
+          type: array
+          items:
+            type: string
+
+    ReportSubmitResult:
+      type: object
+      required:
+        - token
+        - message
+      properties:
+        token:
+          type: string
+        message:
+          type: string
+
+    TrackingEvent:
+      type: object
+      required:
+        - status
+        - timestamp
+        - description
+      properties:
+        status:
+          type: string
+        timestamp:
+          type: string
+        description:
+          type: string
+        severity:
+          type: ["string", "null"]
+
+    ReportTrackResult:
+      type: object
+      required:
+        - token
+        - category
+        - district
+        - submittedAt
+        - events
+      properties:
+        token:
+          type: string
+        category:
+          type: string
+        district:
+          type: string
+        submittedAt:
+          type: string
+        currentStatus:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackingEvent"
+
+    AdminReport:
+      type: object
+      required:
+        - id
+        - token
+        - category
+        - district
+        - submittedAt
+        - severity
+        - status
+      properties:
+        id:
+          type: string
+        token:
+          type: string
+        category:
+          type: string
+        district:
+          type: string
+        submittedAt:
+          type: string
+        severity:
+          type: string
+        status:
+          type: string
+        assignedTo:
+          type: ["string", "null"]
+
+    EvidenceFile:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        size:
+          type: ["string", "null"]
+
+    AdminReportDetail:
+      type: object
+      required:
+        - id
+        - token
+        - category
+        - district
+        - submittedAt
+        - severity
+        - status
+        - statement
+        - timeline
+      properties:
+        id:
+          type: string
+        token:
+          type: string
+        category:
+          type: string
+        district:
+          type: string
+        submittedAt:
+          type: string
+        severity:
+          type: string
+        status:
+          type: string
+        statement:
+          type: string
+        assignedTo:
+          type: ["string", "null"]
+        evidenceFiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/EvidenceFile"
+        timeline:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackingEvent"
+
+    RouteAction:
+      type: object
+      required:
+        - action
+      properties:
+        action:
+          type: string
+        note:
+          type: ["string", "null"]
+
+    CategoryStat:
+      type: object
+      required:
+        - category
+        - count
+        - percentage
+      properties:
+        category:
+          type: string
+        count:
+          type: integer
+        percentage:
+          type: number
+
+    AdminStats:
+      type: object
+      required:
+        - totalReports
+        - activeCritical
+        - resolved
+        - pendingTriage
+        - categoryBreakdown
+        - severityBreakdown
+        - recentActivity
+      properties:
+        totalReports:
+          type: integer
+        activeCritical:
+          type: integer
+        resolved:
+          type: integer
+        pendingTriage:
+          type: integer
+        categoryBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryStat"
+        severityBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryStat"
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminReport"
+
+    StateStat:
+      type: object
+      required:
+        - state
+        - count
+        - topCategory
+      properties:
+        state:
+          type: string
+        count:
+          type: integer
+        topCategory:
+          type: string
+
+    AwarenessStats:
+      type: object
+      required:
+        - totalIncidents
+        - statesReporting
+        - topCategory
+        - byState
+        - byCategory
+        - disclaimer
+      properties:
+        totalIncidents:
+          type: integer
+        statesReporting:
+          type: integer
+        topCategory:
+          type: string
+        byState:
+          type: array
+          items:
+            $ref: "#/components/schemas/StateStat"
+        byCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryStat"
+        disclaimer:
+          type: string

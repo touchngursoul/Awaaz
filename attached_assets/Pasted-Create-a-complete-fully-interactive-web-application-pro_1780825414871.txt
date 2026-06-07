@@ -1,0 +1,38 @@
+Create a complete, fully interactive web application prototype for a project named "Awaaz Setu" (A Preventive Safety and Support Routing System). The primary objective of this app is to serve as a demo for funding clients and government pitches. Use HTML, CSS (Tailwind CSS for clean UI), and JavaScript (React or modern frontend tech stack). Since this is a demo, use realistic mock data (JSON) instead of actual database storage, but make the functionality look completely real.
+
+Please implement the following pages, sections, and features:
+
+1. Landing Page (Home)
+- Modern, empathetic, and highly professional design.
+- Clear Positioning: Highlight that "Awaaz Setu is NOT a public complaint or exposure wall, it is a safe, anonymous first-step and support routing system."
+- Sections: Hero Section with a prominent "Speak Safely / Report Anonymously" button, Government Partnership Value Model, Pilot Plan details, and an FAQ section.
+- Branding & Tagline: "Awaaz Setu — Safe first step. Trusted support."
+
+2. Anonymous Report Intake Form (User Side)
+- A multi-step form where users can submit reports without any mandatory login, registration, or email/phone verification.
+- Form Fields: Incident Category selection (Bullying, Ragging, Cyber Blackmail, Institutional Pressure, Bad Touch, Mental Distress, etc.), Location/District dropdown, and a rich text Area for the statement.
+- Mock Evidence Upload: Allow users to select and "upload" mock files (Images, Audio, PDF, Text screenshots). Show a progress bar and a visual success state indicating the files are "safely encrypted into a secure locker."
+- Submission Success: Upon submission, auto-generate a random mock token (e.g., AWZ-4821-K) and display it beautifully with a "Copy Token" button.
+
+3. Token-Based Anonymous Tracking Page
+- A page where a user can enter their generated token (like AWZ-4821-K) to check the status of their report.
+- Create 3-4 predefined mock tokens in the code so that if a user inputs them, it shows different status timelines (e.g., "Report Received", "Severity Assigned: L2", "Routed to Verified Counselor", "Action Completed").
+
+4. Severity Triage & Crisis Protocol (Crucial Feature)
+- If the user types specific high-risk keywords in the report form (like "suicide", "harm myself", "end my life"), trigger a real-time "Crisis Protocol" overlay or notice.
+- The notice must say: "Emergency Support Needed. Awaaz Setu is a preventive system, not an emergency response service. Please stay safe. Here are immediate numbers..." and display active mock buttons for Tele-MANAS, National Helplines, and local emergency contacts.
+
+5. Interactive Admin Dashboard (The Pitch Killer Section)
+- Create a professional dashboard view for authorized moderators/district officers.
+- Analytics Cards: Total Reports Intake, Active L4/Critical Cases, Resolved Cases, Top Distress Categories (Graphs using Chart.js or simple CSS bars).
+- Report Management Table: List incoming anonymous reports with columns: Token ID, Category, District, Submission Date, Assigned Severity Level (Color-coded badges: L1-Green, L2-Yellow, L3-Orange, L4-Red), and Action Button.
+- Detail View: Clicking an item in the table opens a modal showing the full anonymous description, mock evidence links, and a routing button ("Route to Counselor", "Escalate to District Committee").
+
+6. Awareness Dashboard Page
+- Display mock statistics and data charts about incident counts by state/city (e.g., Tamil Nadu: 25, Karnataka: 24, Maharashtra: 23, Bihar: 15, etc.).
+- Add the exact mandatory disclaimer at the bottom: "This awareness dashboard is based on media-reported incidents and internal compilation. It is not an official government crime record, not a legal finding, and not proof against any person or institution."
+
+Design and UI Requirements:
+- Use a trustworthy and safe color palette (deep blues, clean whites, soft grays, and alert colors only for severity badges).
+- Ensure smooth page transitions or tab switching.
+- Ensure the interface looks highly modern, responsive (mobile-friendly), and extremely premium to instantly impress investors.
