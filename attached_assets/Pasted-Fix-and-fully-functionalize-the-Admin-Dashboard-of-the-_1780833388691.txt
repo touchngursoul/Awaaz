@@ -1,0 +1,277 @@
+Fix and fully functionalize the Admin Dashboard of the Awaaz Setu web app.
+
+Current issue:
+The admin dashboard UI is visible, but it is mostly static. The sidebar items, table actions, report view buttons, filters, status updates, analytics cards, and routing buttons are not fully interactive. Make the admin panel feel like a real working demo for government, district officer, NGO, and funding presentations.
+
+Important:
+This is still a demo prototype only. Do not add real backend, database, authentication, or real evidence upload. Use mock JSON data and localStorage only.
+
+Admin Dashboard Requirements:
+
+1. Sidebar Navigation Must Work
+   Make these sidebar items clickable and functional:
+
+* Dashboard
+* All Reports
+* Critical Cases
+* Resolved
+
+Behavior:
+
+* Dashboard: show analytics cards, charts, and latest incoming reports.
+* All Reports: show complete reports table.
+* Critical Cases: show only L4 critical cases and L3 high-risk cases.
+* Resolved: show only reports with status “Resolved”, “Action Completed”, or “Closed”.
+
+Highlight active sidebar item visually.
+
+2. Analytics Cards Must Be Dynamic
+   Cards should calculate values from mockReports + localStorage reports:
+
+* Total Reports
+* Active Critical Cases
+* Resolved Cases
+* Pending Triage
+* Reports Routed
+* Fake Reports Flagged
+
+If a user submits a report from the Report Safely form, it should appear in admin data and analytics should update.
+
+3. Charts Must Be Dynamic
+   Make charts update based on report data:
+
+* Reports by Category
+* Severity Breakdown
+* Reports by District
+* Status Breakdown
+
+Use Chart.js, Recharts, or clean CSS bar charts. If chart library is already used, continue with it. If not, use simple CSS bars.
+
+4. Report Management Table Must Be Interactive
+   Table columns:
+
+* Token ID
+* Category
+* District
+* Submission Date
+* Severity
+* Status
+* Action
+
+Each row must have:
+
+* View button
+* Severity badge color:
+
+  * L1 green
+  * L2 yellow
+  * L3 orange
+  * L4 red
+
+Add table tools:
+
+* Search by token/category/district
+* Filter by severity
+* Filter by status
+* Sort by submission date
+
+5. “View” Button Must Open Detail Modal
+   When clicking View:
+   Open a professional modal or side panel showing full anonymous report details.
+
+Show:
+
+* Token ID
+* Category
+* District
+* Submission date
+* Severity level
+* Current status
+* Anonymous user statement
+* Seriousness level
+* Support preference
+* Mock evidence list
+* Suggested routing
+* Risk notes
+* Demo-only disclaimer
+
+Important modal disclaimer:
+“This is a demo-only admin view. In production, evidence access must be role-based, encrypted, audited, and legally reviewed.”
+
+6. Admin Actions Must Work
+   Inside the detail modal, add action buttons:
+
+* Route to Counselor
+* Route to NGO Partner
+* Escalate to District Committee
+* Suggest Cyber Crime Portal
+* Suggest Tele-MANAS
+* Mark Need More Details
+* Mark Under Review
+* Mark Resolved
+* Flag Suspicious Report
+* Close Case
+
+When clicked:
+
+* Update the report status immediately
+* Save updated status in localStorage
+* Update analytics cards
+* Update table row
+* Show toast notification, for example:
+  “Report AWZ-4821-K routed to counselor.”
+  “Report marked as resolved.”
+  “Report flagged for suspicious evidence review.”
+
+7. Suggested Routing Logic
+   Add automatic suggested routing based on category/severity:
+
+Mental Distress / Self-Harm:
+
+* Tele-MANAS
+* Verified Counselor
+* Crisis Support Resources
+
+Cyber Blackmail / Cyber Harassment:
+
+* Cyber Crime Portal
+* Legal Advisor
+* NGO Support
+
+Bad Touch / Sexual Harassment:
+
+* NGO Partner
+* Legal Advisor
+* Women Helpline / Authorized Body
+
+Bullying / Ragging:
+
+* Institution Committee
+* Counselor
+* District Youth Safety Contact
+
+Institutional Pressure:
+
+* Moderator Review
+* Legal Advisor
+* District Committee if severe
+
+L4 Critical:
+
+* Emergency Notice
+* Authorized Escalation Protocol
+* District / legal authority review
+
+8. LocalStorage Integration
+   Ensure reports submitted through the user-side Report Safely form are saved in localStorage and visible in Admin Dashboard.
+
+Expected flow:
+User submits report → token generated → report saved → admin dashboard shows new report → admin can view/action/update status.
+
+If localStorage has no reports, show mock reports by default.
+
+9. Mock Evidence Handling
+   Evidence should remain demo-only.
+   Show file names only.
+   Do not upload or store actual files on server.
+
+For each report, show mock evidence like:
+
+* screenshot_chat_01.png
+* audio_note.mp3
+* statement.pdf
+* call_log.txt
+
+Add note:
+“Evidence files shown here are mock/demo references only.”
+
+10. Status Timeline
+    In the detail modal, add a timeline:
+
+* Report Received
+* Severity Assigned
+* Moderator Review
+* Routing Suggested
+* Action Taken / Pending
+
+When admin takes an action, append it to the timeline.
+
+11. Audit Log Demo
+    Add a small “Demo Audit Log” section in the modal:
+    Examples:
+
+* Report opened by District Officer
+* Status changed to Under Review
+* Routed to Counselor
+* Marked Resolved
+
+This must be local demo only.
+
+12. Critical Case Highlight
+    For L4 cases:
+
+* Add red border or alert strip
+* Show text:
+  “Critical case. Immediate authorized escalation protocol may be required.”
+* Add emergency disclaimer:
+  “Awaaz Setu is not an emergency response service. In immediate danger, emergency services or verified crisis support must be contacted.”
+
+13. Admin Dashboard Top Banner
+    Add a top banner:
+    “Demo Admin Panel — For district officer, NGO, legal advisor, and funding stakeholder preview only. Not production-ready.”
+
+14. Production Readiness Warning
+    At the bottom of dashboard, add:
+    “Production version must include secure login, role-based access control, encryption, evidence access restrictions, audit logs, legal review, counselor onboarding, and government-approved escalation workflow.”
+
+15. Keep Legal-Safe Wording
+    Do not use wording like:
+
+* guilty
+* accused proven
+* investigation completed
+* punishment
+* justice guaranteed
+* criminal confirmed
+
+Use safer wording:
+
+* report reviewed
+* support suggested
+* routed to authorized partner
+* escalation suggested
+* evidence requires verification
+* risk level assigned
+* case status updated
+
+16. UI Improvements
+    Make admin dashboard premium and professional:
+
+* Clean cards
+* Better spacing
+* Better table hover states
+* Better modal design
+* Better mobile responsiveness
+* Keep deep blue sidebar
+* Keep severity badges clear
+* Keep government-friendly design
+
+17. Test Expected Demo Flow
+    After changes, this complete demo flow must work:
+
+* User submits a report from Report Safely page.
+* Token is generated.
+* User can track token on Track Report page.
+* Admin Dashboard shows the new report.
+* Admin clicks View.
+* Modal opens with details.
+* Admin routes to counselor.
+* Status updates.
+* Analytics update.
+* Timeline/audit log updates.
+* Toast notification appears.
+
+Do not add backend yet.
+Do not add real authentication yet.
+Do not upload files to server.
+Keep everything frontend-only and demo-ready.
