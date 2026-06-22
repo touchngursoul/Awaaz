@@ -38,6 +38,10 @@ interface AdminReport {
   auditLog: AuditEntry[];
   suggestedRouting: string[];
   riskNotes: string;
+  verificationStatus?: "anonymous" | "verified";
+  withdrawalReason?: string;
+  withdrawalDate?: string;
+  correctionNote?: string;
   fromUser?: boolean;
 }
 
@@ -66,6 +70,9 @@ const ACTIONS: { id: string; label: string; newStatus: string; icon: typeof User
   { id: "resolved", label: "Mark — Resolved", newStatus: "Resolved", icon: CheckCircle, style: "bg-green-600 text-white hover:bg-green-700" },
   { id: "flag_suspicious", label: "Flag — Suspicious Report", newStatus: "Flagged — Suspicious Report", icon: Flag, style: "bg-card border border-red-200 text-red-700 hover:bg-red-50" },
   { id: "close_case", label: "Close Case", newStatus: "Case Closed", icon: X, style: "bg-card border border-card-border text-muted-foreground hover:bg-muted" },
+  { id: "approve_withdrawal", label: "Approve Withdrawal", newStatus: "Withdrawal Approved After Review", icon: CheckCircle, style: "bg-green-600 text-white hover:bg-green-700" },
+  { id: "keep_review", label: "Keep Under Review", newStatus: "Under Safety Review", icon: Shield, style: "bg-card border border-card-border text-secondary hover:bg-muted" },
+  { id: "escalate_safety", label: "Escalate Safety Check", newStatus: "Safety Escalation Suggested", icon: AlertTriangle, style: "bg-red-600 text-white hover:bg-red-700" },
 ];
 
 // ─── Base Mock Reports ────────────────────────────────────────────────────────
@@ -280,6 +287,7 @@ function loadLocalSubmitted(): AdminReport[] {
         ],
         suggestedRouting: getSuggestedRouting(cat, severity),
         riskNotes: severity === "L4" ? "CRITICAL: Self-harm ideation detected. Immediate authorized protocol required." : severity === "L3" ? "High severity. Priority review and support routing required." : "Standard review.",
+        verificationStatus: (r.verificationStatus as "anonymous" | "verified") ?? "anonymous",
         fromUser: true,
       } as AdminReport;
     });
@@ -293,6 +301,10 @@ interface Overrides {
     status: string;
     timeline: TimelineEvent[];
     auditLog: AuditEntry[];
+    verificationStatus?: "anonymous" | "verified";
+    withdrawalReason?: string;
+    withdrawalDate?: string;
+    correctionNote?: string;
   };
 }
 
@@ -313,7 +325,13 @@ function applyOverrides(reports: AdminReport[], overrides: Overrides): AdminRepo
   return reports.map((r) => {
     const ov = overrides[r.id];
     if (!ov) return r;
-    return { ...r, status: ov.status, timeline: ov.timeline, auditLog: ov.auditLog };
+    const extra = {
+      verificationStatus: ov.verificationStatus,
+      withdrawalReason: ov.withdrawalReason,
+      withdrawalDate: ov.withdrawalDate,
+      correctionNote: ov.correctionNote,
+    };
+    return { ...r, status: ov.status, timeline: ov.timeline, auditLog: ov.auditLog, ...extra };
   });
 }
 
@@ -443,6 +461,41 @@ function ReportDetailModal({
                 </div>
               </div>
 
+              {/* Trust Status */}
+              <div className="flex items-center gap-3">
+                <div className="bg-muted/40 rounded-xl p-3 flex-1">
+                  <p className="text-xs text-muted-foreground mb-1.5">Trust Status</p>
+                  {report.verificationStatus === "verified" ? (
+                    <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 border border-green-200 rounded-full px-2.5 py-1 text-xs font-semibold">
+                      <CheckCircle className="w-3 h-3" /> Verified Identity — Hidden
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-2.5 py-1 text-xs font-medium">
+                      <Shield className="w-3 h-3" /> Anonymous Report
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Withdrawal Info */}
+              {report.withdrawalReason && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                  <p className="text-xs font-semibold text-amber-800 mb-1">Withdrawal / Review Reason</p>
+                  <p className="text-xs text-amber-700">{report.withdrawalReason}</p>
+                  {report.withdrawalDate && (
+                    <p className="text-xs text-amber-600 mt-1">Requested: {fmt(report.withdrawalDate)}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Correction Note */}
+              {report.correctionNote && (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                  <p className="text-xs font-semibold text-blue-800 mb-1">Correction Note (added by reporter)</p>
+                  <p className="text-xs text-blue-700 leading-relaxed">{report.correctionNote}</p>
+                </div>
+              )}
+
               {/* Statement */}
               <div className="bg-muted/40 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
@@ -556,6 +609,30 @@ function ReportDetailModal({
         {/* Action Buttons */}
         <div className="border-t border-border p-5">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Admin Actions</p>
+
+          {/* Withdrawal / paused warning */}
+          {report.status === "Withdrawal Review Requested" && (
+            <div className="mb-3 bg-orange-50 border border-orange-200 rounded-xl p-3 flex items-start gap-2.5">
+              <AlertTriangle className="w-4 h-4 text-orange-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-bold text-orange-800 mb-0.5">Withdrawal Review Requested</p>
+                <p className="text-xs text-orange-700 leading-relaxed">Reporter has requested withdrawal. Review for safety before approving. Use "Approve Withdrawal" to close, "Keep Under Review" to continue, or "Escalate Safety Check" if risk is found.</p>
+              </div>
+            </div>
+          )}
+          {(report.status === "Withdrawn by Reporter" || report.status === "Withdrawal Approved After Review") && (
+            <div className="mb-3 bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-800 leading-relaxed">This report has been withdrawn. Admin can still review, re-open, or escalate if safety risk is found.</p>
+            </div>
+          )}
+          {report.status === "Paused by Reporter" && (
+            <div className="mb-3 bg-muted/60 border border-border rounded-xl p-3 flex items-start gap-2.5">
+              <Clock className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-muted-foreground leading-relaxed">Reporter has paused support request. No action is expected until reporter resumes. Admin can still review or escalate.</p>
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {ACTIONS.map((a) => (
               <button
@@ -576,7 +653,7 @@ function ReportDetailModal({
 
 // ─── Main Admin Component ─────────────────────────────────────────────────────
 
-type View = "dashboard" | "all" | "critical" | "resolved";
+type View = "dashboard" | "all" | "critical" | "resolved" | "withdrawn" | "paused" | "review";
 
 export function Admin() {
   const { toast } = useToast();
@@ -631,9 +708,10 @@ export function Admin() {
         ];
         const updated = { ...r, status: newStatus, timeline: newTimeline, auditLog: newAuditLog };
         // Persist override
+        const existingOv = overrides[id] ?? {};
         const newOv: Overrides = {
           ...overrides,
-          [id]: { status: newStatus, timeline: newTimeline, auditLog: newAuditLog },
+          [id]: { ...existingOv, status: newStatus, timeline: newTimeline, auditLog: newAuditLog },
         };
         setOverrides(newOv);
         saveOverrides(newOv);
@@ -685,6 +763,9 @@ export function Admin() {
     let r = [...allReports];
     if (activeView === "critical") r = r.filter((x) => x.severity === "L4" || x.severity === "L3");
     if (activeView === "resolved") r = r.filter((x) => ["Resolved", "Case Closed", "Action Completed", "Resources Shared"].includes(x.status));
+    if (activeView === "withdrawn") r = r.filter((x) => x.status === "Withdrawn by Reporter" || x.status === "Withdrawal Approved After Review");
+    if (activeView === "paused") r = r.filter((x) => x.status === "Paused by Reporter");
+    if (activeView === "review") r = r.filter((x) => x.status === "Withdrawal Review Requested");
     if (search) {
       const q = search.toLowerCase();
       r = r.filter((x) => x.token.toLowerCase().includes(q) || x.categoryLabel.toLowerCase().includes(q) || x.district.toLowerCase().includes(q));
@@ -701,11 +782,18 @@ export function Admin() {
 
   const allStatuses = useMemo(() => Array.from(new Set(allReports.map((r) => r.status))), [allReports]);
 
+  const withdrawnCount = allReports.filter((r) => r.status === "Withdrawn by Reporter").length;
+  const pausedCount = allReports.filter((r) => r.status === "Paused by Reporter").length;
+  const reviewCount = allReports.filter((r) => r.status === "Withdrawal Review Requested").length;
+
   const sidebarItems: { id: View; label: string; icon: typeof Activity; badge?: number }[] = [
     { id: "dashboard", label: "Dashboard", icon: Activity },
     { id: "all", label: "All Reports", icon: FileText, badge: stats.total },
     { id: "critical", label: "Critical Cases", icon: AlertTriangle, badge: stats.critical },
     { id: "resolved", label: "Resolved", icon: CheckCircle, badge: stats.resolved },
+    { id: "withdrawn", label: "Withdrawn", icon: X, badge: withdrawnCount },
+    { id: "paused", label: "Paused", icon: Clock, badge: pausedCount },
+    { id: "review", label: "Withdrawal Review", icon: AlertTriangle, badge: reviewCount },
   ];
 
   return (
@@ -780,7 +868,7 @@ export function Admin() {
           <div className="border-b border-border bg-card px-6 py-4 flex flex-wrap items-center justify-between gap-3 sticky top-8 z-10">
             <div>
               <h1 className="font-bold text-secondary capitalize">
-                {activeView === "dashboard" ? "Dashboard Overview" : activeView === "all" ? "All Reports" : activeView === "critical" ? "Critical Cases" : "Resolved Cases"}
+                {activeView === "dashboard" ? "Dashboard Overview" : activeView === "all" ? "All Reports" : activeView === "critical" ? "Critical Cases" : activeView === "withdrawn" ? "Withdrawn Reports" : activeView === "paused" ? "Paused Reports" : activeView === "review" ? "Withdrawal Review" : "Resolved Cases"}
               </h1>
               <p className="text-xs text-muted-foreground mt-0.5">Awaaz Setu — District Admin Panel · {stats.total} total reports</p>
             </div>
@@ -887,7 +975,7 @@ export function Admin() {
               <div className="px-5 py-4 border-b border-border">
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <h3 className="font-bold text-secondary text-sm flex-1">
-                    {activeView === "critical" ? "Critical & High-Risk Cases" : activeView === "resolved" ? "Resolved Cases" : "Incoming Reports"}
+                    {activeView === "critical" ? "Critical & High-Risk Cases" : activeView === "resolved" ? "Resolved Cases" : activeView === "withdrawn" ? "Withdrawn Reports" : activeView === "paused" ? "Paused Reports" : activeView === "review" ? "Withdrawal Review Requested" : "Incoming Reports"}
                     {" "}
                     <span className="text-muted-foreground font-normal">({tableReports.length})</span>
                   </h3>
@@ -943,7 +1031,7 @@ export function Admin() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/30">
-                      {["Token ID", "Category", "District", "Date", "Severity", "Status", "Action"].map((h) => (
+                      {["Token ID", "Category", "District", "Date", "Severity", "Status", "Trust", "Action"].map((h) => (
                         <th key={h} className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 whitespace-nowrap">{h}</th>
                       ))}
                     </tr>
@@ -951,7 +1039,7 @@ export function Admin() {
                   <tbody className="divide-y divide-border">
                     {tableReports.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground text-sm">
+                        <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground text-sm">
                           No reports match the current filters.
                         </td>
                       </tr>
@@ -975,6 +1063,17 @@ export function Admin() {
                         <td className="px-4 py-3"><SeverityBadge severity={report.severity} /></td>
                         <td className="px-4 py-3">
                           <span className="text-xs text-muted-foreground max-w-[120px] block truncate">{report.status}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          {report.verificationStatus === "verified" ? (
+                            <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 border border-green-200 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap">
+                              <Shield className="w-2.5 h-2.5" /> Verified
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-200 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">
+                              Anon
+                            </span>
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           <button

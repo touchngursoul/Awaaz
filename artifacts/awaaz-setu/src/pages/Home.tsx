@@ -424,6 +424,21 @@ export function Home() {
         </div>
       </section>
 
+      {/* Trust Balance Pitch */}
+      <section className="py-16 bg-secondary px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
+            <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "hsl(201,78%,65%)" }}>Platform Design Principle</p>
+            <p className="text-white text-lg font-semibold leading-relaxed mb-4">
+              "Awaaz Setu balances two important needs: real victims must feel safe to speak anonymously, and the system must reduce fake or malicious reporting through optional trust verification, withdrawal controls, correction notes, evidence review, and human moderation."
+            </p>
+            <p className="text-white/60 text-sm leading-relaxed max-w-2xl mx-auto">
+              We do not force identity at the first step. We allow anonymous reporting first, and optional verification later when the user is ready or when escalation requires more trust.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-primary py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">

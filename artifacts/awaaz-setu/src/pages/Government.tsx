@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { Shield, TrendingUp, Users, FileText, Lock, BarChart2, GitBranch, ArrowRight, CheckCircle } from "lucide-react";
+import { Shield, TrendingUp, Users, FileText, Lock, BarChart2, GitBranch, ArrowRight, CheckCircle, AlertTriangle } from "lucide-react";
 
 const valueCards = [
   {
@@ -145,6 +145,54 @@ export function Government() {
                 <p className="text-muted-foreground text-xs leading-relaxed">{card.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Balance Pitch */}
+      <section className="py-12 bg-secondary px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center mb-8">
+            <p className="text-white text-lg font-semibold leading-relaxed mb-3">
+              "Awaaz Setu balances two important needs: real victims must feel safe to speak anonymously, and the system must reduce fake or malicious reporting through optional trust verification, withdrawal controls, correction notes, evidence review, and human moderation."
+            </p>
+            <p className="text-white/60 text-sm">We do not force identity at the first step. We allow anonymous reporting first, and optional verification later when the user is ready or when escalation requires more trust.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* How Awaaz Setu Reduces Misuse */}
+      <section className="py-20 bg-muted/20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-primary font-semibold text-sm uppercase tracking-widest mb-3">Misuse Reduction</p>
+            <h2 className="text-3xl font-bold text-secondary mb-4">How Awaaz Setu Reduces Misuse</h2>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">Awaaz Setu is designed to be resistant to fake, revenge, or malicious reporting through multiple layered controls — without breaking anonymity for genuine victims.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+            {[
+              { icon: Shield, title: "Optional Trust Verification", desc: "Reduces fake reporting without forcing Aadhaar on the first step. Users verify only when they choose." },
+              { icon: AlertTriangle, title: "False Report Warning", desc: "Users must confirm the report is true to the best of their knowledge before submitting." },
+              { icon: CheckCircle, title: "L1/L2 Withdraw Option", desc: "Users can withdraw reports submitted in anger, confusion, or mistake — with reason and audit trail." },
+              { icon: FileText, title: "Correction Option", desc: "Users can add correction notes without deleting the original statement. History is preserved." },
+              { icon: Users, title: "Human Review Before Routing", desc: "Serious action or escalation requires authorized moderator review — not automatic action." },
+              { icon: Lock, title: "Evidence Credibility Check", desc: "Evidence is used for context, not as final proof. Moderators assess credibility before routing." },
+              { icon: Shield, title: "No Public Naming", desc: "Reports are never publicly published, reducing the risk of revenge misuse or false public accusations." },
+              { icon: AlertTriangle, title: "High-Risk Safety Review", desc: "L3/L4 withdrawal and closure require safety review. No automatic dismissal for serious cases." },
+            ].map((card) => (
+              <div key={card.title} className="bg-card border border-card-border rounded-xl p-5 hover:shadow-md transition-shadow">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <card.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-bold text-secondary text-sm mb-2">{card.title}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed">{card.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6">
+            <p className="text-xs text-primary/80 leading-relaxed text-center max-w-3xl mx-auto">
+              <strong>Policy Note:</strong> Anonymous reporting is always allowed. DigiLocker-style verification is optional and used only as a trust layer, not as a public identity display. Awaaz Setu does not show Aadhaar number in reports or normal dashboard view. Production implementation must follow legal consent, data minimization, encryption, audit logs, and authorized access controls.
+            </p>
           </div>
         </div>
       </section>

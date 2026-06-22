@@ -1,0 +1,501 @@
+Update the existing Awaaz Setu prototype with two important safety and trust features:
+
+1. Controlled Withdraw / Revoke Report feature for L1 and L2 cases.
+2. Optional DigiLocker-style Trust Verification layer to reduce fake reporting without breaking user anonymity.
+
+Important:
+This is a demo prototype only.
+Do not add real DigiLocker API.
+Do not add real Aadhaar verification.
+Do not store Aadhaar number.
+Do not add backend.
+Use mock UI, mock verification status, localStorage, and demo-only logic.
+
+Project Positioning Reminder:
+Awaaz Setu is not a police portal, not a court, not an FIR system, not an emergency service, and not a public complaint wall.
+It is a safe anonymous first-step, early-intervention, evidence-aware triage, and support routing platform.
+
+==================================================
+PART 1: ADD WITHDRAW / REVOKE REPORT FEATURE
+============================================
+
+Purpose:
+Some users may submit a report in anger, fear, confusion, misunderstanding, or emotional pressure. Later they may realize they do not want further action. The platform should allow controlled withdrawal for low-risk cases, but serious safety cases must not be directly deleted or withdrawn without review.
+
+Use wording:
+Use “Withdraw Report” instead of “Delete Report”.
+Use “Withdrawn by Reporter” as status.
+Do not permanently delete reports in demo mode.
+Only update status, timeline, and audit log.
+
+---
+
+## A. Track Report Page Update
+
+On the Token-Based Tracking page, after user enters a valid token and report details appear, add these user action buttons:
+
+1. Withdraw Report
+2. Correct My Report
+3. Pause Support Request
+
+Button visibility rules:
+
+Show “Withdraw Report” only when:
+
+* Severity is L1 or L2
+* Report is not already routed to counselor/NGO/district committee
+* Report is not resolved/closed
+* Report does not contain self-harm, suicide, child abuse, sexual assault, physical danger, or emergency keywords
+
+For L3 or L4:
+Do not allow direct withdrawal.
+Instead show:
+“Request Withdrawal Review”
+
+Show message:
+“This report may involve higher safety risk. A withdrawal request will be reviewed for safety before any action is stopped.”
+
+---
+
+## B. Withdraw Confirmation Modal
+
+When user clicks “Withdraw Report”, open a professional modal.
+
+Modal title:
+“Withdraw this report?”
+
+Modal message:
+“You can withdraw this L1/L2 report if you do not want further action. Awaaz Setu will stop further demo action on this report. This does not mean the information was false. It only means you do not want to continue the report process.”
+
+Reason dropdown:
+
+* Submitted in anger
+* Issue resolved
+* Wrong information added
+* I do not want further support
+* Duplicate report
+* Other reason
+
+Checkbox:
+“I understand that withdrawal stops further demo action on this report.”
+
+Buttons:
+
+* Cancel
+* Confirm Withdrawal
+
+After confirmation:
+
+* Update status to “Withdrawn by Reporter”
+* Save withdrawal reason
+* Save withdrawal date/time
+* Add timeline event:
+  “Report withdrawn by reporter using anonymous token.”
+* Add audit log event:
+  “Withdrawal requested through token tracking page.”
+* Show success toast:
+  “Your report has been withdrawn. No further demo action will be taken unless safety risk is found.”
+
+---
+
+## C. L3/L4 Withdrawal Review Flow
+
+For L3 or L4 cases, show button:
+“Request Withdrawal Review”
+
+When clicked:
+
+* Open confirmation modal
+* Ask reason
+* Update status to “Withdrawal Review Requested”
+* Add timeline:
+  “Reporter requested withdrawal review. Safety review required.”
+* Add audit log:
+  “High-risk withdrawal review requested through token page.”
+
+Admin dashboard should show alert:
+“High-risk withdrawal request. Review carefully before closing.”
+
+Admin action buttons for this state:
+
+* Approve Withdrawal
+* Keep Under Review
+* Escalate for Safety Check
+
+If admin approves:
+Status becomes:
+“Withdrawal Approved After Review”
+
+If admin keeps review:
+Status becomes:
+“Under Safety Review”
+
+If admin escalates:
+Status becomes:
+“Safety Escalation Suggested”
+
+---
+
+## D. Correct My Report Feature
+
+Add “Correct My Report” option on token tracking page.
+
+For L1 and L2:
+Allow user to add correction note in textarea.
+
+Important:
+Do not replace old report text.
+Add correction as a new note.
+
+After submission:
+Status becomes:
+“Correction Added”
+
+Timeline:
+“Reporter added a correction note.”
+
+Admin modal should show:
+Original statement
+Correction note separately
+
+---
+
+## E. Pause Support Request Feature
+
+Add “Pause Support Request” option.
+
+When clicked:
+Open modal:
+“Pause support request?”
+
+Message:
+“You can pause support request and return later using the same token.”
+
+After confirmation:
+Status becomes:
+“Paused by Reporter”
+
+Timeline:
+“Support request paused by reporter.”
+
+Admin dashboard:
+Show paused badge.
+
+---
+
+## F. Admin Dashboard Update for Withdraw Feature
+
+Admin table should include withdrawn and paused statuses.
+
+Add filters:
+
+* All Reports
+* Critical Cases
+* Resolved
+* Withdrawn Reports
+* Paused Reports
+* Withdrawal Review Requested
+
+In report detail modal, show:
+
+* Withdrawal reason
+* Withdrawal date/time
+* Correction notes
+* Pause status
+* Timeline
+* Demo audit log
+
+For withdrawn L1/L2 reports:
+Disable routing buttons or show warning:
+“This report was withdrawn by reporter. Further routing should not be done unless safety risk is identified.”
+
+For L3/L4 withdrawal review:
+Show warning:
+“High-risk withdrawal request. Safety review required before closing.”
+
+---
+
+## G. Policy Disclaimer for Withdraw
+
+Add this note near withdrawal option:
+
+“For low-risk cases, withdrawal may stop further action. For serious safety concerns, self-harm risk, child safety, violence, sexual assault, or emergency signals, Awaaz Setu may show safety guidance and require authorized review. Awaaz Setu does not delete legal obligations or emergency responsibilities.”
+
+==================================================
+PART 2: ADD OPTIONAL DIGILOCKER-STYLE TRUST VERIFICATION
+========================================================
+
+Purpose:
+Fake reporting is a concern. But if DigiLocker/Aadhaar verification is made mandatory, real victims may feel scared and leave the platform. Awaaz Setu should follow:
+
+“Anonymous First, Verified Later”
+
+Meaning:
+User can submit report anonymously first.
+Verification should be optional.
+Verification should be used only as a trust layer, not as public identity display.
+
+Important:
+Do not integrate real DigiLocker API.
+Create a mock DigiLocker verification UI only.
+Do not ask for Aadhaar number.
+Do not show Aadhaar field.
+Do not store Aadhaar data.
+Do not use words like “KYC mandatory” or “Aadhaar required”.
+
+---
+
+## A. Add Verification Choice in Report Form
+
+In the Anonymous Report Form, add a step:
+
+“Optional Trust Verification”
+
+Show two cards:
+
+Card 1:
+Continue Anonymously
+Description:
+“Submit safely without name, phone, email, Aadhaar, or login.”
+
+Card 2:
+Add Trust Verification
+Description:
+“Optional verification can improve report credibility during support routing. Your identity will remain hidden from public view and normal dashboard view.”
+
+Recommended badge:
+“Optional”
+
+Default selected option:
+Continue Anonymously
+
+---
+
+## B. Safe Wording Near Verification
+
+Add this text before verification button:
+
+“DigiLocker-style verification is optional in this demo. Awaaz Setu will not show your Aadhaar number in the report. Your identity will not be visible to the public, respondent, or normal dashboard view. Verification only helps reduce misuse and improve trust during support routing. You can continue anonymously.”
+
+Button text:
+“Verify Safely — Demo”
+
+Do not use:
+
+* Aadhaar Verify
+* KYC Required
+* Identity Mandatory
+* Aadhaar Authentication Required
+
+---
+
+## C. Mock Verification Modal
+
+When user clicks “Verify Safely — Demo”, open modal.
+
+Modal title:
+“Optional Trust Verification”
+
+Modal content:
+“This demo simulates a DigiLocker-style trust verification. No real Aadhaar, DigiLocker, or government authentication is happening.”
+
+Show checklist:
+
+* Aadhaar number will not be shown in report
+* Identity will not be visible publicly
+* Normal admin dashboard will show only verification status
+* Verification helps reduce fake reporting
+* User can still continue anonymously
+
+Buttons:
+
+* Continue Anonymously
+* Simulate Verification
+
+When user clicks “Simulate Verification”:
+
+* Show loading animation for 2 seconds
+* Then show success:
+  “Verified Identity — Hidden”
+
+Save in localStorage:
+verificationStatus: “Verified Identity — Hidden”
+verificationMode: “Mock DigiLocker Demo”
+identityVisible: false
+
+Do not save Aadhaar number.
+
+---
+
+## D. Report Success Page Update
+
+After report submission, show token card.
+
+Also show verification status:
+
+* Anonymous Report
+  or
+* Verified Identity — Hidden
+
+If verified:
+Show:
+“Your report has a trust verification seal. Your identity is hidden and not displayed in the report.”
+
+If anonymous:
+Show:
+“You submitted anonymously. You can still track this report using your token.”
+
+---
+
+## E. Tracking Page Update
+
+When user tracks token, show:
+Verification Status:
+
+* Anonymous Report
+  or
+* Verified Identity — Hidden
+
+For anonymous reports, show optional button:
+“Add Trust Verification Later — Demo”
+
+When clicked:
+Open same mock verification modal.
+After simulated verification:
+Update report verificationStatus in localStorage.
+
+---
+
+## F. Admin Dashboard Verification Update
+
+In admin report table, add column:
+Trust Status
+
+Values:
+
+* Anonymous
+* Verified Identity — Hidden
+
+Use badges:
+Anonymous = gray/blue badge
+Verified Identity — Hidden = green/blue badge with shield icon
+
+Important:
+Do not show name, Aadhaar, phone, or email in admin table.
+
+In detail modal:
+Show:
+Trust Status: Verified Identity — Hidden
+or
+Trust Status: Anonymous Report
+
+Add note:
+“Identity details are not displayed in this demo. In production, identity access must be role-based, encrypted, audited, and allowed only under legal/authorized workflow.”
+
+---
+
+## G. Fake Report Risk Controls Page / Section
+
+Add a section called:
+“How Awaaz Setu Reduces Misuse”
+
+Cards:
+
+1. Optional Trust Verification
+   Reduces fake reporting without forcing Aadhaar on first step.
+
+2. False Report Warning
+   User must confirm that the report is true to the best of their knowledge.
+
+3. L1/L2 Withdraw Option
+   Users can withdraw reports submitted in anger, confusion, or mistake.
+
+4. Correction Option
+   User can add correction without deleting the original statement.
+
+5. Human Review Before Routing
+   Serious action or escalation should require authorized review.
+
+6. Evidence Credibility Check
+   Evidence is used for context, not as final proof.
+
+7. No Public Naming
+   Reports are never publicly published, reducing revenge misuse.
+
+8. High-Risk Safety Review
+   L3/L4 withdrawal and closure require safety review.
+
+---
+
+## H. Policy Text for DigiLocker Trust Layer
+
+Add this official line in policy section:
+
+“Anonymous reporting is always allowed. DigiLocker-style verification is optional and used only as a trust layer, not as a public identity display. Awaaz Setu does not show Aadhaar number in reports or normal dashboard view. Production implementation must follow legal consent, data minimization, encryption, audit logs, and authorized access controls.”
+
+==================================================
+PART 3: UPDATE PITCH / GOVERNMENT LANGUAGE ON WEBSITE
+=====================================================
+
+Add this line in Home / Government Value section:
+
+“Awaaz Setu balances two important needs: real victims must feel safe to speak anonymously, and the system must reduce fake or malicious reporting through optional trust verification, withdrawal controls, correction notes, evidence review, and human moderation.”
+
+Add another line:
+“We do not force identity at the first step. We allow anonymous reporting first, and optional verification later when the user is ready or when escalation requires more trust.”
+
+==================================================
+PART 4: ACCEPTANCE TEST
+=======================
+
+After updating, make sure this complete demo flow works:
+
+Flow 1: Anonymous Report
+
+* User submits report anonymously
+* Token is generated
+* Verification status shows “Anonymous Report”
+* Report appears in Admin Dashboard
+
+Flow 2: Optional Verification
+
+* User selects “Add Trust Verification”
+* Mock modal opens
+* User clicks “Simulate Verification”
+* Status becomes “Verified Identity — Hidden”
+* Token page and Admin Dashboard show trust badge
+* No Aadhaar number is asked or stored
+
+Flow 3: L1/L2 Withdraw
+
+* User submits L1/L2 report
+* Tracks token
+* “Withdraw Report” button appears
+* User selects reason and confirms
+* Status becomes “Withdrawn by Reporter”
+* Admin dashboard updates
+* Timeline and audit log update
+
+Flow 4: L3/L4 Withdrawal Review
+
+* User submits L3/L4 report
+* Tracks token
+* Direct withdraw is not allowed
+* “Request Withdrawal Review” appears
+* Admin dashboard shows safety review alert
+
+Flow 5: Correction
+
+* User tracks token
+* Clicks “Correct My Report”
+* Adds correction note
+* Admin modal shows original statement and correction separately
+
+Flow 6: Admin Dashboard
+
+* Admin can filter by Withdrawn Reports
+* Admin can filter by Withdrawal Review Requested
+* Admin can see Trust Status badges
+* Analytics update based on statuses
+
+Keep the UI premium, clean, mobile responsive, government-friendly, and Bihar Startup pitch-ready.
